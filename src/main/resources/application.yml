@@ -12,8 +12,8 @@ spring:
         format_sql: true
     database: h2
     database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
   application:
     name: employeeservice
 server:
   port: 8081
-
