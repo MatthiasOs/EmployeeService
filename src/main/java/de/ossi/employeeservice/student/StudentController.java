@@ -1,9 +1,8 @@
 package de.ossi.employeeservice.student;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +22,18 @@ public class StudentController {
     public Student getById(@PathVariable("id") Integer id) {
         return studentRepository.findById(id)
                                 .orElseThrow(() -> new EntityNotFoundException("No Student found for ID: " + id));
+    }
+
+    //TODO Post with create Student
+    @PostMapping("/students")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createStudent(@RequestBody Student student) {
+        studentRepository.save(student);
+    }
+
+    @GetMapping("/students/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable("id") Integer id) {
+        studentRepository.deleteById(id);
     }
 }
