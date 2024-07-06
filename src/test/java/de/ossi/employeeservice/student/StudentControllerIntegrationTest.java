@@ -15,19 +15,19 @@ class StudentControllerIntegrationTest {
 
     @Test
     void findAllShouldHaveResults() {
-        assertThat(controller.getAll()).isNotEmpty();
+        assertThat(controller.getAllStudents()).isNotEmpty();
     }
 
     @Test
     void findByIdShouldReturnResult() {
-        assertThat(controller.getById(1)).isNotNull();
+        assertThat(controller.getStudentById(1)).isNotNull();
     }
 
     @Test
     void deleteShouldRemoveStudent() {
-        assertThat(controller.getById(4)).isNotNull();
+        assertThat(controller.getStudentById(4)).isNotNull();
         controller.deleteById(4);
-        assertThat(controller.getAll())
+        assertThat(controller.getAllStudents())
                 .areNot(new Condition<>(student -> student.getId().equals(4), "ID=4 Should not be found"));
     }
 }

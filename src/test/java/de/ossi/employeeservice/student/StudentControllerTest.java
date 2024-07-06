@@ -28,13 +28,13 @@ public class StudentControllerTest {
     @Test
     void repoReturns1ResultFindAllShouldReturn1Result() {
         when(studentRepository.findAll()).thenReturn(Collections.singletonList(emtpyStudent));
-        assertThat(studentController.getAll()).hasSize(1);
+        assertThat(studentController.getAllStudents()).hasSize(1);
     }
 
     @Test
     void noResultIsFoundByIdShouldThrowException() {
         when(studentRepository.findById(any())).thenReturn(Optional.empty());
-        Assertions.assertThatThrownBy(() -> studentController.getById(999))
+        Assertions.assertThatThrownBy(() -> studentController.getStudentById(999))
                   .isInstanceOf(EntityNotFoundException.class)
                   .hasMessageContaining("999");
     }
@@ -44,7 +44,7 @@ public class StudentControllerTest {
         Student student = new Student();
         student.setId(111);
         when(studentRepository.findById(any())).thenReturn(Optional.of(student));
-        Student byId = studentController.getById(111);
+        Student byId = studentController.getStudentById(111);
         assertThat(byId)
                 .extracting(Student::getId)
                 .isEqualTo(111);
