@@ -1,5 +1,6 @@
 package de.ossi.employeeservice.student;
 
+import de.ossi.employeeservice.school.School;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -33,8 +34,28 @@ public class StudentController {
 
     @PostMapping("/students")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createStudent(@Valid @RequestBody Student student) {
-        studentRepository.save(student);
+    public StudentResponseDto createStudent(@Valid @RequestBody StudentDto studentDto) {
+        var student = toStudent(studentDto);
+        var savedStudent = studentRepository.save(student);
+        return toStudentResponseDto(savedStudent);
+    }
+
+    private Student toStudent(StudentDto studentDto) {
+        var student = new Student();
+        student.setFirstname(studentDto.firstname());
+        student.setLastname(studentDto.lastname());
+        student.setEmail(studentDto.email());
+        var school = new School();
+        school.setId(10001); //TODO weil es die school schon gibt
+        student.setSchool(school);
+        return student;
+    }
+
+    private StudentResponseDto toStudentResponseDto(Student student) {
+        return new StudentResponseDto(
+                student.getFirstname(),
+                student.getLastname(),
+                student.getEmail());
     }
 
     @DeleteMapping("/students/delete/{id}")

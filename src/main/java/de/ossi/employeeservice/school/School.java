@@ -1,5 +1,6 @@
 package de.ossi.employeeservice.school;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.ossi.employeeservice.student.Student;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -25,6 +26,7 @@ public class School {
     @OneToMany(
             mappedBy = "school"
     )
+    @JsonManagedReference //Damit keine Schleife beim parsen des JSON entsteht
     private List<Student> students = new ArrayList<>();
 
     public School(String name) {

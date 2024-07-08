@@ -43,8 +43,8 @@ class StudentControllerIntegrationTest {
         String studentName = "NewStudent";
         Condition<Student> shouldHaveLastName = new Condition<>(s -> "NewStudent".equals(s.getLastname()), "No Student should have Lastname=" + studentName);
         assertThat(controller.getAllStudents()).areNot(shouldHaveLastName);
-        Student student = createStudent(studentName);
-        controller.createStudent(student);
+        StudentDto studentDto = createDto(studentName);
+        controller.createStudent(studentDto);
         assertThat(controller.getAllStudents()).areExactly(1, shouldHaveLastName);
     }
 
@@ -55,12 +55,7 @@ class StudentControllerIntegrationTest {
                   .hasMessageContaining("" + studentId);
     }
 
-    private Student createStudent(String studentName) {
-        Student student = new Student();
-        student.setEmail("email" + studentName);
-        student.setAge(18);
-        student.setLastname(studentName);
-        student.setFirstname(studentName);
-        return student;
+    private StudentDto createDto(String studentName) {
+        return new StudentDto(studentName, studentName, "email" + studentName, null);
     }
 }

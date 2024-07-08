@@ -1,5 +1,6 @@
 package de.ossi.employeeservice.student;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import de.ossi.employeeservice.school.School;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -25,6 +26,7 @@ public class Student {
 
     @ManyToOne
     @JoinColumn(name = "school_id")
+    @JsonBackReference //Sagt, dass die School der parent ist und nicht serialisiert werden muss
     private School school;
 
     @OneToOne(mappedBy = "student", //Wie das Feld in StudentProfile vom Student heißt!
