@@ -2,13 +2,12 @@ package de.ossi.employeeservice.school;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequiredArgsConstructor(onConstructor_ = @Autowired) //TODO muss man das Autowired hier machen?
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
 public class SchoolController {

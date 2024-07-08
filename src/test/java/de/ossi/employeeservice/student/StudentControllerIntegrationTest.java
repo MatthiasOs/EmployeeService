@@ -18,12 +18,12 @@ class StudentControllerIntegrationTest {
 
     @Test
     void findAllShouldHaveResults() {
-        assertThat(controller.getAllStudents()).isNotEmpty();
+        assertThat(controller.findAll()).isNotEmpty();
     }
 
     @Test
     void findByIdShouldReturnResult() {
-        assertThat(controller.getStudentById(10001)).isNotNull();
+        assertThat(controller.findStudentById(10001)).isNotNull();
     }
 
     @DirtiesContext
@@ -31,7 +31,7 @@ class StudentControllerIntegrationTest {
     void deleteShouldRemoveStudent() {
         //TODO Assert ResponseStatus
         Integer studentId = 10004;
-        assertThat(controller.getStudentById(studentId)).isNotNull();
+        assertThat(controller.findStudentById(studentId)).isNotNull();
         controller.deleteById(studentId);
         assertThatNoStudentWithIdFound(studentId);
     }
@@ -41,16 +41,17 @@ class StudentControllerIntegrationTest {
     void createShouldAddNewStudent() {
         //TODO Assert ResponseStatus
         String studentName = "NewStudent";
-        Condition<Student> shouldHaveLastName = new Condition<>(s -> "NewStudent".equals(s.getLastname()), "No Student should have Lastname=" + studentName);
-        assertThat(controller.getAllStudents()).areNot(shouldHaveLastName);
+        Condition<StudentResponseDto> shouldHaveLastName = new Condition<>(s -> "NewStudent".equals(s.lastname()), "No Student should have Lastname=" + studentName);
+        assertThat(controller.findAll()).areNot(shouldHaveLastName);
         StudentDto studentDto = createDto(studentName);
-        controller.createStudent(studentDto);
-        assertThat(controller.getAllStudents()).areExactly(1, shouldHaveLastName);
+        StudentResponseDto savedStudent = controller.createStudent(studentDto);
+        assertThat(savedStudent).extracting(StudentResponseDto::lastname).isEqualTo("NewStudent");
+        assertThat(controller.findAll()).areExactly(1, shouldHaveLastName);
     }
 
     private void assertThatNoStudentWithIdFound(Integer studentId) {
         //TODO repo.existsById verwenden?
-        Assertions.assertThatThrownBy(() -> controller.getStudentById(studentId))
+        Assertions.assertThatThrownBy(() -> controller.findStudentById(studentId))
                   .isInstanceOf(EntityNotFoundException.class)
                   .hasMessageContaining("" + studentId);
     }
