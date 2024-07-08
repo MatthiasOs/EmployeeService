@@ -1,4 +1,6 @@
 package de.ossi.employeeservice.school;
 
-public record SchoolDto(String name) {
+import jakarta.validation.constraints.NotNull;
+
+public record SchoolDto(@NotNull String name) {
 }

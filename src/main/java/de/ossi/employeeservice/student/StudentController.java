@@ -3,9 +3,15 @@ package de.ossi.employeeservice.student;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+
+import static java.util.stream.Collectors.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -40,5 +46,16 @@ public class StudentController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable("id") Integer id) {
         studentService.deleteById(id);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = ex.getBindingResult()
+                                       .getAllErrors()
+                                       .stream()
+                                       .collect(toMap(
+                                               e -> ((FieldError) e).getField(),
+                                               e -> e.getDefaultMessage() == null ? "No Message" : e.getDefaultMessage()));
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }
