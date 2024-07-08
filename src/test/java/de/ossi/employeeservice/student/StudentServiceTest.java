@@ -16,25 +16,27 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith({MockitoExtension.class})
-public class StudentControllerTest {
+public class StudentServiceTest {
 
     @Mock
     private StudentRepository studentRepository;
+    @Mock
+    private StudentMapper studentMapper;
     @InjectMocks
-    private StudentController studentController;
+    private StudentService studentService;
 
     private final Student emtpyStudent = new Student();
 
     @Test
     void repoReturns1ResultFindAllShouldReturn1Result() {
         when(studentRepository.findAll()).thenReturn(Collections.singletonList(emtpyStudent));
-        assertThat(studentController.findAll()).hasSize(1);
+        assertThat(studentService.findAll()).hasSize(1);
     }
 
     @Test
     void noResultIsFoundByIdShouldThrowException() {
         when(studentRepository.findById(any())).thenReturn(Optional.empty());
-        Assertions.assertThatThrownBy(() -> studentController.findStudentById(999))
+        Assertions.assertThatThrownBy(() -> studentService.findStudentById(999))
                   .isInstanceOf(EntityNotFoundException.class)
                   .hasMessageContaining("999");
     }
@@ -43,11 +45,12 @@ public class StudentControllerTest {
     void resultIsFoundByIdShouldReturnResult() {
         Student student = new Student();
         student.setId(111);
-        student.setLastname("lastName");
+        student.setLastname("lastname");
         when(studentRepository.findById(any())).thenReturn(Optional.of(student));
-        StudentResponseDto byId = studentController.findStudentById(111);
+        when(studentMapper.toStudentResponseDto(any())).thenReturn(new StudentResponseDto("firstname", "lastname", "email"));
+        StudentResponseDto byId = studentService.findStudentById(111);
         assertThat(byId)
                 .extracting(StudentResponseDto::lastname)
-                .isEqualTo("lastName" + 111);
+                .isEqualTo("lastname");
     }
 }
