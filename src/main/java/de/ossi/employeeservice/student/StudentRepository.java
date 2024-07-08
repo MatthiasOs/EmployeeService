@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface StudentRepository extends ListCrudRepository<Student, Integer> {
-    List<Student> findStudentByLastname(String lastname);
+    List<Student> findAllByLastnameContaining(String lastnameParam);
 }

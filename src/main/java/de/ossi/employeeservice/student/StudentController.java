@@ -26,13 +26,18 @@ public class StudentController {
                                 .orElseThrow(() -> new EntityNotFoundException("No Student found for ID: " + id));
     }
 
+    @GetMapping("/students/search/{lastname}")
+    public List<Student> findStudentsByLastName(@PathVariable("lastname") String lastname) {
+        return studentRepository.findAllByLastnameContaining(lastname);
+    }
+
     @PostMapping("/students")
     @ResponseStatus(HttpStatus.CREATED)
     public void createStudent(@Valid @RequestBody Student student) {
         studentRepository.save(student);
     }
 
-    @PostMapping("/students/delete/{id}")
+    @DeleteMapping("/students/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable("id") Integer id) {
         studentRepository.deleteById(id);

@@ -29,6 +29,7 @@ class StudentControllerIntegrationTest {
     @DirtiesContext
     @Test
     void deleteShouldRemoveStudent() {
+        //TODO Assert ResponseStatus
         Integer studentId = 10004;
         assertThat(controller.getStudentById(studentId)).isNotNull();
         controller.deleteById(studentId);
@@ -38,6 +39,7 @@ class StudentControllerIntegrationTest {
     @DirtiesContext
     @Test
     void createShouldAddNewStudent() {
+        //TODO Assert ResponseStatus
         String studentName = "NewStudent";
         Condition<Student> shouldHaveLastName = new Condition<>(s -> "NewStudent".equals(s.getLastname()), "No Student should have Lastname=" + studentName);
         assertThat(controller.getAllStudents()).areNot(shouldHaveLastName);
