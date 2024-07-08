@@ -8,12 +8,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({MockitoExtension.class})
 public class StudentServiceTest {
@@ -28,14 +28,16 @@ public class StudentServiceTest {
     private final Student emtpyStudent = new Student();
 
     @Test
-    void repoReturns1ResultFindAllShouldReturn1Result() {
-        when(studentRepository.findAll()).thenReturn(Collections.singletonList(emtpyStudent));
-        assertThat(studentService.findAll()).hasSize(1);
+    void repoReturns2ResultFindAllShouldReturn2Result() {
+        when(studentRepository.findAll()).thenReturn(List.of(emtpyStudent, emtpyStudent));
+        assertThat(studentService.findAll()).hasSize(2);
+        verify(studentMapper, times(2)).toStudentResponseDto(any());
     }
 
     @Test
     void noResultIsFoundByIdShouldThrowException() {
         when(studentRepository.findById(any())).thenReturn(Optional.empty());
+        verifyNoInteractions(studentMapper);
         Assertions.assertThatThrownBy(() -> studentService.findStudentById(999))
                   .isInstanceOf(EntityNotFoundException.class)
                   .hasMessageContaining("999");
@@ -49,6 +51,7 @@ public class StudentServiceTest {
         when(studentRepository.findById(any())).thenReturn(Optional.of(student));
         when(studentMapper.toStudentResponseDto(any())).thenReturn(new StudentResponseDto("firstname", "lastname", "email"));
         StudentResponseDto byId = studentService.findStudentById(111);
+        verify(studentMapper).toStudentResponseDto(any());
         assertThat(byId)
                 .extracting(StudentResponseDto::lastname)
                 .isEqualTo("lastname");
