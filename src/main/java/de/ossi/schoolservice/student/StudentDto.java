@@ -1,4 +1,4 @@
-package de.ossi.employeeservice.student;
+package de.ossi.schoolservice.student;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

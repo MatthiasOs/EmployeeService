@@ -1,6 +1,6 @@
-package de.ossi.employeeservice.student;
+package de.ossi.schoolservice.student;
 
-import de.ossi.employeeservice.school.School;
+import de.ossi.schoolservice.school.School;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,4 +1,4 @@
-package de.ossi.employeeservice;
+package de.ossi.schoolservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

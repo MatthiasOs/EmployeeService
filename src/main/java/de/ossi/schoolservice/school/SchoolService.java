@@ -1,4 +1,4 @@
-package de.ossi.employeeservice.school;
+package de.ossi.schoolservice.school;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package de.ossi.employeeservice.school;
+package de.ossi.schoolservice.school;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

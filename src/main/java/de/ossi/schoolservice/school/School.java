@@ -1,7 +1,7 @@
-package de.ossi.employeeservice.school;
+package de.ossi.schoolservice.school;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import de.ossi.employeeservice.student.Student;
+import de.ossi.schoolservice.student.Student;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

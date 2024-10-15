@@ -1,4 +1,4 @@
-package de.ossi.employeeservice.student;
+package de.ossi.schoolservice.student;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;

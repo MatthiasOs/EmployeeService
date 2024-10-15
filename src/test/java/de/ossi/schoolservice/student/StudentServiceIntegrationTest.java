@@ -1,4 +1,4 @@
-package de.ossi.employeeservice.student;
+package de.ossi.schoolservice.student;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.assertj.core.api.Assertions;

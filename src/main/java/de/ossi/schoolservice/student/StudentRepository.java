@@ -1,4 +1,4 @@
-package de.ossi.employeeservice.student;
+package de.ossi.schoolservice.student;
 
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
