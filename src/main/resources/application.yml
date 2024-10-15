@@ -17,6 +17,6 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
   application:
-    name: employeeservice
+    name: schoolservice
 server:
   port: 8081
